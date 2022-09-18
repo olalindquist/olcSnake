@@ -2,7 +2,6 @@
 #include "./../olcPixelGameEngine/olcPixelGameEngine.h"
 #include "game.h"
 
-
 class Example : public olc::PixelGameEngine
 {
 private:

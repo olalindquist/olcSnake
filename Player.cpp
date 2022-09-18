@@ -7,7 +7,7 @@ Player::Player(float xPosition, float yPosition, float scale){
   this->yPos=yPosition;
   this->xSpeed = 0;
   this->ySpeed = 0;
-  //    this->tail = std::make_shared<Tail>();
+  //  this->tail = std::make_shared<Tail>();
   this->scale = scale;
 }
 
@@ -48,9 +48,18 @@ void Player::checkCollision(int maxX, int maxY, std::shared_ptr<Apple> apple) {
   if (collidingWithPixel(apple->getX(), apple->Apple::getY() )){
     apple->Apple::refresh();
     stopPlayer();
+    //    addTailPiece();
     std::cout <<"Eating apple!"  << "\n";
   }
+
 }
+
+
+/*void Player::addTailPiece(){
+
+
+
+} */
 
 void Player::move(){
   this->xPos += this-> xSpeed;
