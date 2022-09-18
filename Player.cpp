@@ -7,7 +7,7 @@ Player::Player(float xPosition, float yPosition, float scale){
   this->yPos=yPosition;
   this->xSpeed = 0;
   this->ySpeed = 0;
-  //  this->tail = std::make_shared<Tail>();
+  this->tail = std::make_shared<Tail>();
   this->scale = scale;
 }
 
@@ -18,6 +18,8 @@ void Player::stopPlayer(){
 
 void Player::drawPlayer(olc::PixelGameEngine* engine){
   engine->DrawDecal({this->xPos,this->yPos} , myDecal, {this->spriteScaleFactor,this->spriteScaleFactor });
+
+  this->tail->drawTail(engine, this->xPos, this->yPos);
 }
 
 bool Player::collidingWithPixel (float objectX, float objectY){
@@ -48,18 +50,16 @@ void Player::checkCollision(int maxX, int maxY, std::shared_ptr<Apple> apple) {
   if (collidingWithPixel(apple->getX(), apple->Apple::getY() )){
     apple->Apple::refresh();
     stopPlayer();
-    //    addTailPiece();
+    this->tail->addTailPiece(this->xPos, this->yPos);
     std::cout <<"Eating apple!"  << "\n";
   }
 
 }
 
 
-/*void Player::addTailPiece(){
-
-
-
-} */
+void Player::addTailPiece(){
+  this->tail->addTailPiece(this->xPos, this->yPos);
+}
 
 void Player::move(){
   this->xPos += this-> xSpeed;

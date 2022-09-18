@@ -9,8 +9,9 @@ private:
   const int32_t spriteXSize = 50;
   const int32_t spriteYSize = 50;
   const float spriteScaleFactor = 0.05f;
-  int xPos;
-  int yPos;
+  int32_t xPos;
+  int32_t yPos;
+  int32_t len;
   olc::Sprite* tailSprite = nullptr;
   olc::Decal* tailDecal = nullptr;
   std::shared_ptr<Tail> nextPiece;
@@ -22,5 +23,5 @@ public:
   Tail();
   void addTailPiece(int xPos, int yPos);
   void onUpdate(std::shared_ptr<Player> player);
-  void drawTail(olc::PixelGameEngine* engine);
+  void drawTail(olc::PixelGameEngine* engine, float x, float y);
 };

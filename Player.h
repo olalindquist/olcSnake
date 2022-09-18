@@ -21,7 +21,7 @@ class Player{
   float scale;
 
   void checkCollision(int maxX, int maxY, std::shared_ptr<Apple> apple);
-  //  void addTailPiece();
+  void addTailPiece();
   bool collidingWithPixel (float objectX, float objectY);
   void stopPlayer();
   void move();
