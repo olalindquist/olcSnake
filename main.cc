@@ -6,14 +6,6 @@
 class Example : public olc::PixelGameEngine
 {
 private:
-  /*
-  const int32_t spriteXSize = 50;
-  const int32_t spriteYSize = 50;
-
-  olc::Decal* myDecal = nullptr;
-  olc::Sprite* playerSprite = nullptr;
-
-  */
   const float spriteScaleFactor = 0.05f;
   std::shared_ptr<Player> player = nullptr;
   std::shared_ptr<Apple> apple = nullptr;
@@ -26,18 +18,8 @@ public:
 public:
   bool OnUserCreate() override
   {
-
     player = std::make_shared<Player>(10,10, this->spriteScaleFactor);
-        /*
-   playerSprite  = new olc::Sprite("./graphics/ball.png");
- myDecal = new olc::Decal(playerSprite);
-    */
     apple = std::make_shared<Apple>(ScreenWidth(), ScreenHeight());
-   //playerSprite = std::make_shared<olc::Sprite> ("./graphics/ball.png");
-   //this->myDecal = std::make_shared <olc::Decal>(*&playerSprite);
-   //   myDecal = new olc::Decal(playerSprite);
-   // Called once at the start, so create things here
-
     return true;
   }
 
@@ -61,11 +43,8 @@ public:
     keyCheck(player, fElapsedTime);
     player->onUpdate(ScreenWidth(), ScreenHeight(),apple);
     Clear(olc::DARK_BLUE);
-
-    //     DrawDecal({player->getXPosition(),player->getYPosition()}, myDecal, {this->spriteScaleFactor,this->spriteScaleFactor });
     player->drawPlayer(this);
     Draw(apple->getX(), apple->getY(), olc::Pixel(rand() % 255, rand() % 255, rand()% 255)) ;
-
     DrawString(10,10, std::to_string(apple->getX()) );
     DrawString(10,20, std::to_string (apple->getY()) );
     DrawString(10,30, std::to_string(player->getXPosition() ) );
