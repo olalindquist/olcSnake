@@ -44,10 +44,10 @@ public:
     Clear(olc::DARK_BLUE);
     player->drawPlayer(this);
     Draw(apple->getX(), apple->getY(), olc::Pixel(rand() % 255, rand() % 255, rand()% 255)) ;
-    DrawString(10,10, std::to_string(apple->getX()) );
-    DrawString(10,20, std::to_string (apple->getY()) );
-    DrawString(10,30, std::to_string(player->getXPosition() ) );
-    DrawString(10,40, std::to_string (player->getYPosition()));
+    DrawStringDecal({10,10}, std::to_string(apple->getX()),olc::GREEN, {0.1f, 0.1f} );
+    DrawStringDecal({10,20}, std::to_string(apple->getY()),olc::GREEN, {0.1f, 0.1f} );
+    DrawStringDecal({10,30}, std::to_string(player->getXPosition()),olc::GREEN, {0.1f, 0.1f} );
+    DrawStringDecal({10,40}, std::to_string(player->getYPosition()),olc::GREEN, {0.1f, 0.1f} );
       return true;
   }
 };

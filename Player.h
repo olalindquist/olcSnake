@@ -3,7 +3,7 @@
 #include "Tail.h"
 
 class Apple;
-class Tail;
+class TailÖ;
 
 class Player{
  private:

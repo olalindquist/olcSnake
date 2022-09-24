@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include "./../olcPixelGameEngine/olcPixelGameEngine.h"
 #include "TailListNode.h"
 
 class TailPiece;
@@ -14,11 +15,12 @@ private:
 
 public:
   static int32_t size;
+
   TailList();
   bool hasNext();
-  int32_t getSize() ;
+  std::shared_ptr<TailListNode> getNext();
+  std::shared_ptr<TailListNode> getFirst();
+  int32_t getSize();
   void addTailPieceToList(std::shared_ptr<TailPiece> newPiece);
-
   void moveTail();
-
 };
