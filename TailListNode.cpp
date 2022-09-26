@@ -34,6 +34,3 @@ bool TailListNode::hasNext(){
 void TailListNode::draw(olc::PixelGameEngine* engine){
   this->tailPiece->draw(engine);
 }
-void TailListNode::move(float newXpos, float newYPos){
-  this->tailPiece->move (newXpos,newYPos);
-}

@@ -16,11 +16,8 @@ class TailListNode {
   TailListNode ();
   std::shared_ptr<TailPiece> getTailPiece();
   std::shared_ptr<TailListNode> getNext();
-
   bool hasNext();
-
-
   void setNext(std::shared_ptr<TailListNode> nextNode) ;
   void draw(olc::PixelGameEngine* engine);
-  void move (float newXpos, float newYpos);
+
 };
