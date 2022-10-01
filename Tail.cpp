@@ -28,12 +28,9 @@ void Tail::onUpdate(std::shared_ptr<Player> player){
 }
 
 void Tail::compensate(std::shared_ptr<TailListNode> node,  float priorPieceX, float priorPieceY,float xPos,float yPos, float xSpeed, float ySpeed){
-
 }
 
-
-
-void Tail::drawTail(olc::PixelGameEngine* engine, float xSpeed, float ySpeed, float xPos, float yPos){
+void Tail::drawTail(olc::PixelGameEngine* engine, float playerXspeed, float playerYspeed, float playerXPos, float playerYPos){
 
   if (TailList::size == 0){
     return;
@@ -43,23 +40,29 @@ void Tail::drawTail(olc::PixelGameEngine* engine, float xSpeed, float ySpeed, fl
   std::shared_ptr<TailPiece> firstPiece= firstNode->getTailPiece();
 
 
-  if (abs(xPos - firstPiece->getXPos()) >= 10 || abs(yPos - firstPiece->getYPos() >=10 ) ){
+  engine->DrawStringDecal({3,1}, "Xdist"+ std::to_string(playerXPos - (firstPiece->getXPos())), olc::RED, {0.1f, 0.1f} );
+  engine->DrawStringDecal({3,2}, "PlayerXpos"+ std::to_string(playerXPos), olc::RED, {0.1f, 0.1f} );
+  engine->DrawStringDecal({3,5}, "tailXcheckpointX"+ std::to_string(firstPiece->getCheckpointX()), olc::RED, {0.1f, 0.1f} );
 
-    engine->DrawStringDecal({10,1}, "Xdist: "+std::to_string(abs(xPos - firstPiece->getXPos())), olc::BLACK, {0.1f, 0.1f} );
 
-    engine->DrawStringDecal({10,2}, "Ydist: "+std::to_string( abs(yPos - firstPiece->getYPos() >=10 )),olc::BLACK, {0.1f, 0.1f} );
-    engine->DrawStringDecal({10,3}, "getYPos(): "+std::to_string(firstPiece->getYPos())   , olc::BLACK, {0.1f, 0.1f} );
+  if (( (playerXPos - (firstPiece->getXPos())) >= -3 &&
+        (playerXPos - (firstPiece->getXPos())) <= 3)
+      &&
+      ((playerYPos - firstPiece->getYPos()) <=  3 &&
+       (playerYPos - firstPiece->getYPos()) >= -33)
 
-    engine->DrawStringDecal({10,4}, "getXpos() "+std::to_string(firstPiece->getXPos()), olc::BLACK, {0.1f, 0.1f} );
+      ) {
+    engine->DrawStringDecal({10,3}, "Less then 4" , olc::RED, {0.1f, 0.1f} );
 
-    firstPiece->setCheckpoint(xPos, yPos);
+  }else{
+   firstPiece->setCheckpoint(playerXPos, playerYPos,0,0); //TODO
+
   }
+  firstPiece->update();
 
+  firstPiece->draw(engine);
+  engine->DrawStringDecal({10,50}, "Tail:",olc::GREEN, {0.1f, 0.1f} );
 
-    firstPiece->move();
-    firstPiece->draw(engine);
-
-    engine->DrawStringDecal({10,50}, "Tail:",olc::GREEN, {0.1f, 0.1f} );
 
 
 

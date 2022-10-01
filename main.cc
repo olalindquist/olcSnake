@@ -23,17 +23,20 @@ public:
   }
 
   void keyCheck(std::shared_ptr<Player> p, float time){
-    if (GetKey(olc::UP).bPressed){
+    if (GetKey(olc::UP).bHeld){
       p-> moveUp(time);
     }
-    if (GetKey(olc::DOWN).bPressed){
+    if (GetKey(olc::DOWN).bHeld){
       p-> moveDown(time);
     }
-    if (GetKey(olc::LEFT).bPressed){
+    if (GetKey(olc::LEFT).bHeld){
       p->moveLeft(time);
     }
-    if (GetKey(olc::RIGHT).bPressed){
+    if (GetKey(olc::RIGHT).bHeld){
       p->moveRight(time);
+    }
+    if (GetKey(olc::SPACE).bPressed){
+      p->stopPlayer();
     }
   }
 
@@ -48,7 +51,7 @@ public:
     DrawStringDecal({10,20}, std::to_string(apple->getY()),olc::GREEN, {0.1f, 0.1f} );
     DrawStringDecal({10,30}, std::to_string(player->getXPosition()),olc::GREEN, {0.1f, 0.1f} );
     DrawStringDecal({10,40}, std::to_string(player->getYPosition()),olc::GREEN, {0.1f, 0.1f} );
-      return true;
+    return true;
   }
 };
 

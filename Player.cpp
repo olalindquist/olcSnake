@@ -1,26 +1,24 @@
 #include "game.h"
 
 Player::Player(float xPosition, float yPosition, float scale){
-  playerSprite  = new olc::Sprite("./graphics/ball.png");
+  playerSprite  = new olc::Sprite("./graphics/head.png");
   myDecal = new olc::Decal(playerSprite);
   this->xPos=xPosition;
   this->yPos=yPosition;
-  this->xSpeed = 0;
-  this->ySpeed = 0;
+  this->speed.max =0.01f;
   this->tail = std::make_shared<Tail>(0,0);
   this->scale = scale;
 }
 
 void Player::stopPlayer(){
-  this->xSpeed = 0;
-  this->ySpeed = 0;
+  this->speed.x = 0;
+  this->speed.y = 0;
 }
 
 void Player::drawPlayer(olc::PixelGameEngine* engine){
-
   engine->DrawDecal({this->xPos,this->yPos} , myDecal, {this->spriteScaleFactor,this->spriteScaleFactor});
 
-  this->tail->drawTail(engine, this->xSpeed, this->ySpeed, this->xPos, this->yPos);
+  this->tail->drawTail(engine, this->speed.x, this->speed.y, this->xPos, this->yPos);
 }
 
 bool Player::collidingWithPixel (float objectX, float objectY){
@@ -62,8 +60,8 @@ void Player::addTailPiece(){
 }
 
 void Player::move(){
-  this->xPos += this-> xSpeed;
-  this->yPos += this-> ySpeed;
+  this->xPos += this-> speed.x;
+  this->yPos += this-> speed.y;
 }
 
 void Player::onUpdate( int32_t screenSizeX, int32_t screenSizeY, std::shared_ptr<Apple> apple ){
@@ -80,21 +78,33 @@ float Player::getYPosition(){
 }
 
 void Player::moveUp(float time){
-  this->xSpeed = 0;
-  this->ySpeed = -1*speed;
+    if (this->speed.y >= -(this->speed.max)){
+    this->speed.y -= 0.001f;
+    this->speed.x=0;
+  }
+
 }
 
 void Player::moveDown(float time){
-  this->xSpeed = 0;
-  this->ySpeed = speed;
+  if (this->speed.y <= this -> speed.max){
+      this->speed.y += 0.001f;
+      this->speed.x=0;
+    }
 }
 
 void Player::moveLeft(float time){
-  this->xSpeed = -1*speed;
-  this->ySpeed = 0;
+  if (this->speed.x >= - (this -> speed.max)){
+  this->speed.x -= 0.001f;
+  this->speed.y=0;
+
+}
+
 }
 
 void  Player::moveRight(float time){
-  this->xSpeed = speed;
-  this->ySpeed = 0;
+  if (this->speed.x <= this -> speed.max){
+  this->speed.x += 0.001f;
+  this->speed.y=0;
+}
+
 }

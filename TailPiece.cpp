@@ -2,50 +2,61 @@
 
 
 TailPiece::TailPiece(float xPos, float yPos, std::shared_ptr<TailPiece> priorPiece){
-    this->tailSprite = std::make_shared<olc::Sprite>("./graphics/ball.png");
+    this->tailSprite = std::make_shared<olc::Sprite>("./graphics/ball2.png");
   this->tailDecal = std::make_shared<olc::Decal>(this->tailSprite.get());
   this->priorPiece = priorPiece;
   this->xPos = xPos;
   this->yPos = yPos;
-  this->xSpeed=0;
-  this->ySpeed=0;
+  this->speed.x = 0;
+  this->speed.y = 0;
+  this->speed.max = 0.05f;
 }
 
 bool TailPiece::hasReachedCheckpoint(){
 
   return this->reachedCheckpoint;
+
 }
 
+
 void TailPiece::move(){
+  this->xPos += this->speed.x;
+  this->yPos += this->speed.y;
+}
 
- if (this->xPos -  this->checkpointX < 0.1f && this->xPos - this->checkpointX > -0.1f ){
-    this->reachedCheckpoint = true;
-    this->setCheckpoint(this->checkpointX, this->checkpointY);
+
+void TailPiece::update(){
+
+  if (this->xPos -  this->checkpointX < 0.2f &&
+      this->xPos - this->checkpointX > -0.2f &&
+      this->yPos -  this->checkpointY < 0.2f &&
+      this->yPos -  this->checkpointY > -0.2f  )
+    {
+      this->reachedCheckpoint = true;
+    } else {
+    aimForCheckpoint();
   }
 
- if (this->yPos -  this->checkpointY < 0.1f && this->yPos -  this->checkpointY > -0.1f ){
+  this->move();
 
-    this->reachedCheckpoint = true;
-    this->setCheckpoint(this->checkpointX, this->checkpointY);
+}
+
+void TailPiece::aimForCheckpoint(){
+  //xDirectin
+  if (this->xPos -this-> checkpointX > 0 ){
+    this->speed.x = -0.01f;
+  }
+  if (this->xPos - this-> checkpointX <= 0 ){
+    this->speed.x = 0.01f;
+  }
+  if (this->yPos -this-> checkpointY > 0 ){
+    this->speed.y = -0.01f;
+  }
+  if (this->yPos - this-> checkpointY <= 0 ){
+    this->speed.y = 0.01f;
   }
 
-  this->reachedCheckpoint = false;
 
-  if (this->xPos - this->checkpointX < 3  ) {
-    this->xPos += 0.02f;
-  }
-
-  if (this->xPos - this->checkpointX >= 3  ){
-
-    this->xPos -= 0.02f;
-  }
-
-  if (this->yPos - this->checkpointY < 3  ) {
-    this->yPos += 0.02f;
-  }
-  if (this->yPos - this->checkpointY >= 3  ){
-    this->yPos -= 0.02f;
-  }
 }
 void TailPiece::draw(olc::PixelGameEngine* engine){
 
@@ -54,7 +65,7 @@ void TailPiece::draw(olc::PixelGameEngine* engine){
 }
 
 float TailPiece::getXPos(){
-  return this->yPos;
+  return this->xPos;
 }
 
 float TailPiece::getYPos(){
@@ -69,15 +80,19 @@ float TailPiece::getCheckpointY(){
   return this->checkpointY;
 }
 
-void TailPiece::setCheckpoint(float nextXPos, float nextYPos){
+void TailPiece::setCheckpoint(float nextXPos, float nextYPos, float xspeed, float yspeed){
 
   this->checkpointX = nextXPos;
   this->checkpointY = nextYPos;
+  //  this->speed.x = (nextXPos-this->xPos)/(nextYPos-this->yPos);
+  // this->speed.y = (nextYPos-this->yPos)/(nextXPos-this->xPos);
+
+
 }
 
 void TailPiece::setSpeed(float xSpeed, float ySpeed){
-  this->xSpeed = xSpeed;
-  this->ySpeed = ySpeed;
+  this->speed.x = xSpeed;
+  this->speed.y = ySpeed;
 }
 
 std::shared_ptr<TailPiece> TailPiece::getPriorPiece(){

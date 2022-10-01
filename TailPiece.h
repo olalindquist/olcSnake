@@ -7,8 +7,13 @@ private:
 
   float xPos;
   float yPos;
-  float xSpeed;
-  float ySpeed;
+
+  struct {
+    float max;
+    float x;
+    float y;
+  } speed;
+
   float checkpointX;
   float checkpointY;
   bool  reachedCheckpoint;
@@ -16,18 +21,21 @@ private:
   std::shared_ptr<olc::Sprite> tailSprite;
   std::shared_ptr<olc::Decal> tailDecal;
   std::shared_ptr<TailPiece> priorPiece;
+  void aimForCheckpoint();
 
 public:
-
   TailPiece(float xPos, float yPos, std::shared_ptr<TailPiece> priorPiece);
   void setSpeed(float xSpeed, float ySpeed);
+
   float getXPos();
   float getYPos();
   void move();
+  void update();
   void draw(olc::PixelGameEngine* engine);
+
   float getCheckpointX();
   float getCheckpointY();
-  void setCheckpoint(float nextXPos, float nextYPos);
+  void setCheckpoint(float nextXPos, float nextYPos, float xSpeed, float ySpeed); //TODO
   bool hasReachedCheckpoint();
   std::shared_ptr<TailPiece> getPriorPiece();
 };

@@ -7,15 +7,18 @@ class Tail;
 
 class Player{
  private:
+    struct {
+    float max;
+    float  x;
+    float y;
+  } speed;
+
   const int32_t spriteXSize = 50;
   const int32_t spriteYSize = 50;
   const float spriteScaleFactor = 0.05f;
   olc::Decal* myDecal = nullptr;
   olc::Sprite* playerSprite = nullptr;
   std::shared_ptr<Tail> tail = nullptr;
-  float const speed = 0.02f;
-  float xSpeed;
-  float ySpeed;
   float xPos;
   float yPos;
   float scale;
@@ -23,10 +26,10 @@ class Player{
   void checkCollision(int maxX, int maxY, std::shared_ptr<Apple> apple);
   void addTailPiece();
   bool collidingWithPixel (float objectX, float objectY);
-  void stopPlayer();
   void move();
 
 public:
+  void stopPlayer();
   Player(float xPosition, float yPosition, float scale);
   void drawPlayer(olc::PixelGameEngine* engine);
   void onUpdate( int32_t screenSizeX, int32_t screenSizeY, std::shared_ptr<Apple> apple );
