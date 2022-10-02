@@ -26,13 +26,13 @@ class Player{
   void checkCollision(int maxX, int maxY, std::shared_ptr<Apple> apple);
   void addTailPiece();
   bool collidingWithPixel (float objectX, float objectY);
-  void move();
+  void move(float time);
 
 public:
   void stopPlayer();
   Player(float xPosition, float yPosition, float scale);
-  void drawPlayer(olc::PixelGameEngine* engine);
-  void onUpdate( int32_t screenSizeX, int32_t screenSizeY, std::shared_ptr<Apple> apple );
+  void drawPlayer(olc::PixelGameEngine* engine, float time);
+  void onUpdate( int32_t screenSizeX, int32_t screenSizeY, std::shared_ptr<Apple> apple, float time );
   float getXPosition();
   float getYPosition();
   void moveUp(float time);

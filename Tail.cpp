@@ -22,7 +22,7 @@ void Tail::addTailPiece(int xPos, int yPos){
   }
 }
 
-void Tail::drawTail(olc::PixelGameEngine* engine, float playerXspeed, float playerYspeed, float playerXPos, float playerYPos){
+void Tail::drawTail(olc::PixelGameEngine* engine, float playerXspeed, float playerYspeed, float playerXPos, float playerYPos, float time){
 
   if (TailList::size == 0){
     return;
@@ -35,17 +35,18 @@ void Tail::drawTail(olc::PixelGameEngine* engine, float playerXspeed, float play
   std::shared_ptr<TailPiece> priorPiece= priorNode->getTailPiece();
 
 
-  if (( (priorXPos - (priorPiece->getXPos())) >= -3 &&
-        (priorXPos - (priorPiece->getXPos())) <= 3)
-      &&
-      ((priorYPos - priorPiece->getYPos()) <=  3 &&
-       (priorYPos - priorPiece->getYPos()) >= -3)
-      ) {
-
-  }else{
-    priorPiece->setCheckpoint(playerXPos, playerYPos);
+  if  (
+         ( (priorXPos - (priorPiece->getXPos())) <= -3 ||
+           (priorXPos - (priorPiece->getXPos())) >= 3)
+      ||
+         ((priorYPos - priorPiece->getYPos()) >=  3 ||
+          (priorYPos - priorPiece->getYPos()) <= -3)
+        )
+       {
+    priorPiece->setCheckpoint(priorXPos, priorYPos);
   }
   priorPiece->update();
+  priorPiece->move(time);
   priorPiece->draw(engine);
 
 
@@ -59,17 +60,17 @@ void Tail::drawTail(olc::PixelGameEngine* engine, float playerXspeed, float play
     priorYPos = priorPiece->getYPos();
     priorPiece = priorNode->getTailPiece();
 
-  if (( (priorXPos - (priorPiece->getXPos())) >= -3 &&
-        (priorXPos - (priorPiece->getXPos())) <= 3)
-      &&
-      ((priorYPos - priorPiece->getYPos()) <=  3 &&
-       (priorYPos - priorPiece->getYPos()) >= -3)
+  if (
+         ( (priorXPos - (priorPiece->getXPos())) <= -3 ||
+           (priorXPos - (priorPiece->getXPos())) >= 3)
+      ||
+         ((priorYPos - priorPiece->getYPos()) >=  3 ||
+          (priorYPos - priorPiece->getYPos()) <= -3)
       ) {
-
-  }else{
    priorPiece->setCheckpoint(priorXPos, priorYPos);
   }
   priorPiece->update();
+  priorPiece->move(time);
   priorPiece->draw(engine);
   }
   engine->DrawStringDecal({10,50}, "Tail:",olc::GREEN, {0.1f, 0.1f} );

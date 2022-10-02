@@ -38,5 +38,5 @@ public:
   Tail(float xSpeed, float ySpeed);
   void addTailPiece(int xPos, int yPos);
   void onUpdate(std::shared_ptr<Player> player);
-  void drawTail(olc::PixelGameEngine* engine, float x, float y, float  xPos, float yPos);
+  void drawTail(olc::PixelGameEngine* engine, float x, float y, float  xPos, float yPos, float time);
 };

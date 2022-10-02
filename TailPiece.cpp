@@ -9,7 +9,7 @@ TailPiece::TailPiece(float xPos, float yPos, std::shared_ptr<TailPiece> priorPie
   this->yPos = yPos;
   this->speed.x = 0;
   this->speed.y = 0;
-  this->speed.max = 0.05f;
+  this->speed.max = 8.0f;
 }
 
 bool TailPiece::hasReachedCheckpoint(){
@@ -19,9 +19,9 @@ bool TailPiece::hasReachedCheckpoint(){
 }
 
 
-void TailPiece::move(){
-  this->xPos += this->speed.x;
-  this->yPos += this->speed.y;
+void TailPiece::move(float time){
+  this->xPos += this->speed.x*time;
+  this->yPos += this->speed.y*time;
 }
 
 
@@ -38,23 +38,23 @@ void TailPiece::update(){
     aimForCheckpoint();
   }
 
-  this->move();
+
 
 }
 
 void TailPiece::aimForCheckpoint(){
 
   if (this->xPos -this-> checkpointX > 0 ){
-    this->speed.x = -0.03f;
+    this->speed.x = -this->speed.max;
   }
   if (this->xPos - this-> checkpointX <= 0 ){
-    this->speed.x = 0.03;
+    this->speed.x = this->speed.max;
   }
   if (this->yPos -this-> checkpointY > 0 ){
-    this->speed.y = -0.03f;
+    this->speed.y = -this->speed.max;
   }
-  if (this->yPos - this-> checkpointY <= 0 ){
-    this->speed.y = 0.03f;
+  if (this->yPos - this->checkpointY <= 0 ){
+    this->speed.y = this->speed.max;
   }
 
 }

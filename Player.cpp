@@ -5,7 +5,7 @@ Player::Player(float xPosition, float yPosition, float scale){
   myDecal = new olc::Decal(playerSprite);
   this->xPos=xPosition;
   this->yPos=yPosition;
-  this->speed.max =0.03f;
+  this->speed.max =8.0f;
   this->tail = std::make_shared<Tail>(0,0);
   this->scale = scale;
 }
@@ -14,11 +14,9 @@ void Player::stopPlayer(){
   this->speed.x = 0;
   this->speed.y = 0;
 }
-
-void Player::drawPlayer(olc::PixelGameEngine* engine){
+void Player::drawPlayer(olc::PixelGameEngine* engine, float time){
   engine->DrawDecal({this->xPos,this->yPos} , myDecal, {this->spriteScaleFactor,this->spriteScaleFactor});
-
-  this->tail->drawTail(engine, this->speed.x, this->speed.y, this->xPos, this->yPos);
+  this->tail->drawTail(engine, this->speed.x, this->speed.y, this->xPos, this->yPos, time );
 }
 
 bool Player::collidingWithPixel (float objectX, float objectY){
@@ -48,7 +46,6 @@ void Player::checkCollision(int maxX, int maxY, std::shared_ptr<Apple> apple) {
   }
   if (collidingWithPixel(apple->getX(), apple->Apple::getY() )){
     apple->Apple::refresh();
-    // stopPlayer();
     this->tail->addTailPiece(this->xPos, this->yPos);
     std::cout <<"Eating apple!"  << "\n";
   }
@@ -58,14 +55,14 @@ void Player::addTailPiece(){
   this->tail->addTailPiece(this->xPos, this->yPos);
 }
 
-void Player::move(){
-  this->xPos += this-> speed.x;
-  this->yPos += this-> speed.y;
+void Player::move(float time){
+  this->xPos += this-> speed.x*time;
+  this->yPos += this-> speed.y*time;
 }
 
-void Player::onUpdate( int32_t screenSizeX, int32_t screenSizeY, std::shared_ptr<Apple> apple ){
+void Player::onUpdate( int32_t screenSizeX, int32_t screenSizeY, std::shared_ptr<Apple> apple, float time ){
   this->checkCollision(screenSizeX, screenSizeY,apple);
-  this->move();
+  this->move(time);
 }
 
 float Player::getXPosition(){
@@ -81,23 +78,20 @@ void Player::moveUp(float time){
     this->speed.y = -speed.max;
     this->speed.x=0;
   }
-
 }
 
 void Player::moveDown(float time){
   if (this->speed.y <= this -> speed.max){
-    this->speed.y = speed.max;;
+    this->speed.y = speed.max;
     this->speed.x=0;
   }
 }
 
 void Player::moveLeft(float time){
   if (this->speed.x >= - (this -> speed.max)){
-    this->speed.x =  -speed.max;;
+    this->speed.x =  -speed.max ;
     this->speed.y=0;
-
   }
-
 }
 
 void  Player::moveRight(float time){
@@ -105,5 +99,4 @@ void  Player::moveRight(float time){
     this->speed.x = speed.max;
     this->speed.y=0;
   }
-
 }

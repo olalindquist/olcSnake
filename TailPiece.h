@@ -29,7 +29,7 @@ public:
 
   float getXPos();
   float getYPos();
-  void move();
+  void move(float time);
   void update();
   void draw(olc::PixelGameEngine* engine);
 

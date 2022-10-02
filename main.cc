@@ -43,9 +43,9 @@ public:
   bool OnUserUpdate(float fElapsedTime) override{
     SetPixelMode(olc::Pixel::MASK);
     keyCheck(player, fElapsedTime);
-    player->onUpdate(ScreenWidth(), ScreenHeight(),apple);
+    player->onUpdate(ScreenWidth(), ScreenHeight(),apple, fElapsedTime);
     Clear(olc::DARK_BLUE);
-    player->drawPlayer(this);
+    player->drawPlayer(this, fElapsedTime);
     Draw(apple->getX(), apple->getY(), olc::Pixel(rand() % 255, rand() % 255, rand()% 255)) ;
     DrawStringDecal({10,10}, std::to_string(apple->getX()),olc::GREEN, {0.1f, 0.1f} );
     DrawStringDecal({10,20}, std::to_string(apple->getY()),olc::GREEN, {0.1f, 0.1f} );
