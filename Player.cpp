@@ -5,7 +5,7 @@ Player::Player(float xPosition, float yPosition, float scale){
   myDecal = new olc::Decal(playerSprite);
   this->xPos=xPosition;
   this->yPos=yPosition;
-  this->speed.max =0.01f;
+  this->speed.max =0.03f;
   this->tail = std::make_shared<Tail>(0,0);
   this->scale = scale;
 }
@@ -48,11 +48,10 @@ void Player::checkCollision(int maxX, int maxY, std::shared_ptr<Apple> apple) {
   }
   if (collidingWithPixel(apple->getX(), apple->Apple::getY() )){
     apple->Apple::refresh();
-    stopPlayer();
+    // stopPlayer();
     this->tail->addTailPiece(this->xPos, this->yPos);
     std::cout <<"Eating apple!"  << "\n";
   }
-
 }
 
 void Player::addTailPiece(){
@@ -78,8 +77,8 @@ float Player::getYPosition(){
 }
 
 void Player::moveUp(float time){
-    if (this->speed.y >= -(this->speed.max)){
-    this->speed.y -= 0.001f;
+  if (this->speed.y >= -(this->speed.max)){
+    this->speed.y = -speed.max;
     this->speed.x=0;
   }
 
@@ -87,24 +86,24 @@ void Player::moveUp(float time){
 
 void Player::moveDown(float time){
   if (this->speed.y <= this -> speed.max){
-      this->speed.y += 0.001f;
-      this->speed.x=0;
-    }
+    this->speed.y = speed.max;;
+    this->speed.x=0;
+  }
 }
 
 void Player::moveLeft(float time){
   if (this->speed.x >= - (this -> speed.max)){
-  this->speed.x -= 0.001f;
-  this->speed.y=0;
+    this->speed.x =  -speed.max;;
+    this->speed.y=0;
 
-}
+  }
 
 }
 
 void  Player::moveRight(float time){
   if (this->speed.x <= this -> speed.max){
-  this->speed.x += 0.001f;
-  this->speed.y=0;
-}
+    this->speed.x = speed.max;
+    this->speed.y=0;
+  }
 
 }

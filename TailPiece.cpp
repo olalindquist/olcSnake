@@ -34,6 +34,7 @@ void TailPiece::update(){
     {
       this->reachedCheckpoint = true;
     } else {
+    this->reachedCheckpoint = false;
     aimForCheckpoint();
   }
 
@@ -42,22 +43,22 @@ void TailPiece::update(){
 }
 
 void TailPiece::aimForCheckpoint(){
-  //xDirectin
+
   if (this->xPos -this-> checkpointX > 0 ){
-    this->speed.x = -0.01f;
+    this->speed.x = -0.03f;
   }
   if (this->xPos - this-> checkpointX <= 0 ){
-    this->speed.x = 0.01f;
+    this->speed.x = 0.03;
   }
   if (this->yPos -this-> checkpointY > 0 ){
-    this->speed.y = -0.01f;
+    this->speed.y = -0.03f;
   }
   if (this->yPos - this-> checkpointY <= 0 ){
-    this->speed.y = 0.01f;
+    this->speed.y = 0.03f;
   }
 
-
 }
+
 void TailPiece::draw(olc::PixelGameEngine* engine){
 
   engine->DrawDecal({this->xPos ,this->yPos} , tailDecal.get(), {0.05f,0.05f });
@@ -80,14 +81,9 @@ float TailPiece::getCheckpointY(){
   return this->checkpointY;
 }
 
-void TailPiece::setCheckpoint(float nextXPos, float nextYPos, float xspeed, float yspeed){
-
+void TailPiece::setCheckpoint(float nextXPos, float nextYPos){
   this->checkpointX = nextXPos;
   this->checkpointY = nextYPos;
-  //  this->speed.x = (nextXPos-this->xPos)/(nextYPos-this->yPos);
-  // this->speed.y = (nextYPos-this->yPos)/(nextXPos-this->xPos);
-
-
 }
 
 void TailPiece::setSpeed(float xSpeed, float ySpeed){

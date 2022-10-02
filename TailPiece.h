@@ -35,7 +35,7 @@ public:
 
   float getCheckpointX();
   float getCheckpointY();
-  void setCheckpoint(float nextXPos, float nextYPos, float xSpeed, float ySpeed); //TODO
+  void setCheckpoint(float nextXPos, float nextYPos);
   bool hasReachedCheckpoint();
   std::shared_ptr<TailPiece> getPriorPiece();
 };
